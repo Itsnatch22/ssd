@@ -16,7 +16,6 @@ const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Deals', href: '#deals' },
   { name: 'Contact', href: '/contact' },
-  { name: 'Privacy', href: '/privacy' },
 ];
 
 export function Navbar() {
