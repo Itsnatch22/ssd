@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useInView, motion, useSpring, useTransform } from 'framer-motion';
 
 function Counter({ value, label, suffix = "" }: { value: number; label: string; suffix?: string }) {
@@ -36,11 +36,33 @@ function Counter({ value, label, suffix = "" }: { value: number; label: string; 
 }
 
 export function StatsBar() {
+  const [dailyUsers, setDailyUsers] = useState(1000); // Fallback value
+
+  useEffect(() => {
+    const fetchDailyUsers = async () => {
+      try {
+        const response = await fetch('/api/analytics/daily-users');
+        if (response.ok) {
+          const data = await response.json();
+          setDailyUsers(data.dailyUsers);
+        }
+      } catch (error) {
+        console.error('Failed to fetch daily users:', error);
+        // Keep fallback value on error
+      }
+    };
+
+    fetchDailyUsers();
+    // Refresh every hour
+    const interval = setInterval(fetchDailyUsers, 60 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   const stats = [
     { value: 500, label: "Products", suffix: "+" },
     { value: 12, label: "Top Brands", suffix: "" },
     { value: 24, label: "Hours Updated", suffix: "h" },
-    { value: 1000, label: "Daily Users", suffix: "+" },
+    { value: dailyUsers, label: "Daily Users", suffix: "+" },
   ];
 
   return (

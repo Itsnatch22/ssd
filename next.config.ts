@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'storage-deals.wp',
+        hostname: 'm.media-amazon.com',
       },
     ],
   },

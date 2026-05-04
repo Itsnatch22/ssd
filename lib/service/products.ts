@@ -15,6 +15,7 @@ type SsdProductRow = {
   affiliate_tag: string;
   featured: boolean | null;
   created_at: string | null;
+  image_url: string | null;
 };
 
 const PRODUCT_COLUMNS = [
@@ -30,6 +31,7 @@ const PRODUCT_COLUMNS = [
   'affiliate_tag',
   'featured',
   'created_at',
+  'image_url',
 ].join(', ');
 
 const FALLBACK_PRODUCT_IMAGE =
@@ -77,7 +79,7 @@ function mapProductRow(row: SsdProductRow): Product {
     amazon_url: row.amazon_url.trim(),
     affiliate_tag: row.affiliate_tag.trim(),
     featured: Boolean(row.featured),
-    image_url: FALLBACK_PRODUCT_IMAGE,
+    image_url: row.image_url || FALLBACK_PRODUCT_IMAGE,
     image_alt: `${brand} ${name}`,
   };
 }

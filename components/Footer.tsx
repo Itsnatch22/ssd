@@ -13,7 +13,7 @@ export function Footer() {
                 <HardDrive size={22} />
               </div>
               <span className="text-xl font-heading font-bold tracking-tight">
-                SSD<span className="text-accent">EXPERT</span>
+                SSD<span className="text-accent">EXPERTZONE</span>
               </span>
             </Link>
             <p className="text-text-secondary max-w-sm mb-6">

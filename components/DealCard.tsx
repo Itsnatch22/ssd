@@ -10,6 +10,23 @@ export function DealCard({ device, index }: { device: Product; index: number }) 
   
   const pricePerTb = (device.price / device.capacity_gb) * 1000;
 
+  const trackBuyClick = async () => {
+    try {
+      await fetch('/api/analytics/track', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productId: device.id,
+          source: 'dealcard',
+        }),
+      });
+    } catch (error) {
+      console.error('Failed to track click:', error);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -57,6 +74,7 @@ export function DealCard({ device, index }: { device: Product; index: number }) 
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-background text-text-primary hover:bg-accent hover:text-white transition-colors"
+            onClick={trackBuyClick}
           >
             <ExternalLink size={18} />
           </a>

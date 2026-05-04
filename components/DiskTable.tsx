@@ -20,18 +20,15 @@ export function DiskTable() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Filter States
   const [search, setSearch] = useState('');
   const [formFactor, setFormFactor] = useState('All');
   const [technology, setTechnology] = useState('All');
   const [capacityRange, setCapacityRange] = useState<[number, number]>([0, 32000]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 5000]);
 
-  // Sort States
   const [sortKey, setSortKey] = useState<SortKey>('price');
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
 
-  // Pagination
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -50,7 +47,6 @@ export function DiskTable() {
     fetchData();
   }, []);
 
-  // FIX 1: Reset to page 1 whenever any filter changes
   useEffect(() => {
     setCurrentPage(1);
   }, [search, formFactor, technology, capacityRange, priceRange]);
@@ -114,8 +110,24 @@ export function DiskTable() {
     return ['All', ...Array.from(new Set(values))].map(String);
   };
 
-  // FIX 2: Affiliate URL built server-side via /api/redirect — tag never exposed to client
   const getRedirectUrl = (productId: string) => `/api/redirect?id=${productId}`;
+
+  const trackBuyClick = async (productId: string) => {
+    try {
+      await fetch('/api/analytics/track', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productId,
+          source: 'disktable',
+        }),
+      });
+    } catch (error) {
+      console.error('Failed to track click:', error);
+    }
+  };
 
   if (loading) return <div id="deals" className="container mx-auto px-4 py-20"><TableSkeleton /></div>;
   if (error) return <div className="text-center py-20 text-red-500">Error: {error}</div>;
@@ -251,6 +263,7 @@ export function DiskTable() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center justify-center p-2 rounded-lg bg-accent text-white hover:bg-accent-hover transition-all hover:scale-110"
+                          onClick={() => trackBuyClick(device.id)}
                         >
                           <ExternalLink size={16} />
                         </a>
