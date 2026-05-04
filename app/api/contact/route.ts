@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
 
     try {
       const { error: emailError } = await resend.emails.send({
-        from: 'noreply@ssdexpert.com',
+        from: 'inquiry@ssdexpertzone.com',
         to: process.env.CONTACT_EMAIL!,
         subject: `New Contact Form: ${validatedData.subject}`,
         replyTo: validatedData.email,

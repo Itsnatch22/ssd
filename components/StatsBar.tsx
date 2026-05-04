@@ -37,6 +37,7 @@ function Counter({ value, label, suffix = "" }: { value: number; label: string; 
 
 export function StatsBar() {
   const [dailyUsers, setDailyUsers] = useState(1000); // Fallback value
+  const [productCount, setProductCount] = useState(500); // Fallback value
 
   useEffect(() => {
     const fetchDailyUsers = async () => {
@@ -52,14 +53,34 @@ export function StatsBar() {
       }
     };
 
+    const fetchProductCount = async () => {
+      try {
+        const response = await fetch('/api/analytics/product-count');
+        if (response.ok) {
+          const data = await response.json();
+          setProductCount(data.productCount);
+        }
+      } catch (error) {
+        console.error('Failed to fetch product count:', error);
+        // Keep fallback value on error
+      }
+    };
+
+    // Fetch both metrics
     fetchDailyUsers();
+    fetchProductCount();
+    
     // Refresh every hour
-    const interval = setInterval(fetchDailyUsers, 60 * 60 * 1000);
+    const interval = setInterval(() => {
+      fetchDailyUsers();
+      fetchProductCount();
+    }, 60 * 60 * 1000);
+    
     return () => clearInterval(interval);
   }, []);
 
   const stats = [
-    { value: 500, label: "Products", suffix: "+" },
+    { value: productCount, label: "Products", suffix: "+" },
     { value: 12, label: "Top Brands", suffix: "" },
     { value: 24, label: "Hours Updated", suffix: "h" },
     { value: dailyUsers, label: "Daily Users", suffix: "+" },

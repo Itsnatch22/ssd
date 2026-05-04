@@ -28,7 +28,7 @@ export default function ContactEmail({
       <Body style={main}>
         <Container style={container}>
           <Section style={header}>
-            <Heading style={headerTitle}>SSDEXPERT</Heading>
+            <Heading style={headerTitle}>SSDEXPERTZONE</Heading>
             <Text style={headerSubtitle}>New Contact Form Submission</Text>
           </Section>
 
@@ -53,7 +53,7 @@ export default function ContactEmail({
 
           <Section style={footer}>
             <Text style={footerText}>
-              This message was sent from the SSDEXPERT contact form on{" "}
+              This message was sent from the SSDEXPERTZONE contact form on{" "}
               {new Date().toLocaleDateString()} at {new Date().toLocaleTimeString()}
             </Text>
           </Section>

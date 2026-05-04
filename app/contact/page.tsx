@@ -1,8 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { Navbar } from '@/components/Navbar';
-import { Footer } from '@/components/Footer';
 import { Mail, Phone, MapPin, Send, Loader2 } from 'lucide-react';
 import { z } from 'zod';
 
@@ -88,8 +86,6 @@ export default function ContactPage() {
   };
   return (
     <main className="min-h-screen flex flex-col">
-      <Navbar />
-      
       <div className="flex-1 pt-32 pb-24">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
@@ -108,8 +104,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-heading font-bold mb-1">Email Us</h3>
-                    <p className="text-sm text-text-secondary">support@ssdexpert.com</p>
-                    <p className="text-sm text-text-secondary">partners@ssdexpert.com</p>
+                    <p className="text-sm text-text-secondary">4guandaru@gmail.com</p>
                   </div>
                 </div>
 
@@ -119,19 +114,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-heading font-bold mb-1">Call Us</h3>
-                    <p className="text-sm text-text-secondary">+1 (555) 123-4567</p>
-                    <p className="text-sm text-text-secondary">Mon-Fri, 9am - 5pm EST</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4 p-6 bg-surface rounded-3xl border border-border">
-                  <div className="bg-background/20 text-text-primary p-3 rounded-2xl h-fit">
-                    <MapPin size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-heading font-bold mb-1">Office</h3>
-                    <p className="text-sm text-text-secondary">123 Tech Avenue</p>
-                    <p className="text-sm text-text-secondary">Silicon Valley, CA 94025</p>
+                    <p className="text-sm text-text-secondary">+254 722 748219</p>
+                    <p className="text-sm text-text-secondary">Mon-Fri, 9am - 5pm EAT</p>
                   </div>
                 </div>
               </div>
@@ -237,8 +221,6 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-
-      <Footer />
     </main>
   );
 }
