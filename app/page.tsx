@@ -11,7 +11,7 @@ export default function Home() {
         <Hero />
         <StatsBar />
         <FeaturedDeals />
-        <HowItWorks />
+        {/*<HowItWorks /> */}
         <DiskTable />
       </div>
     </main>
