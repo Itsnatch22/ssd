@@ -76,13 +76,8 @@ export function DiskTable() {
     return [...filteredDevices].sort((a, b) => {
       let aVal: number | string, bVal: number | string;
       
-      if (sortKey === 'price_per_tb') {
-        aVal = (a.price / a.capacity_gb) * 1000;
-        bVal = (b.price / b.capacity_gb) * 1000;
-      } else {
-        aVal = a[sortKey as keyof typeof a] as number | string;
-        bVal = b[sortKey as keyof typeof b] as number | string;
-      }
+      aVal = a[sortKey as keyof typeof a] as number | string;
+      bVal = b[sortKey as keyof typeof b] as number | string;
 
       if (sortOrder === 'asc') return aVal > bVal ? 1 : -1;
       return aVal < bVal ? 1 : -1;
@@ -222,18 +217,13 @@ export function DiskTable() {
                 <th className="p-4 font-heading font-bold text-sm cursor-pointer hover:text-accent transition-colors" onClick={() => handleSort('price')}>
                   <div className="flex items-center gap-1">Price <ArrowUpDown size={14} /></div>
                 </th>
-                <th className="p-4 font-heading font-bold text-sm cursor-pointer hover:text-accent transition-colors" onClick={() => handleSort('price_per_tb')}>
-                  <div className="flex items-center gap-1">$/TB <ArrowUpDown size={14} /></div>
-                </th>
                 <th className="p-4 font-heading font-bold text-sm">Tech</th>
                 <th className="p-4 font-heading font-bold text-sm text-center">Buy</th>
               </tr>
             </thead>
             <tbody>
               <AnimatePresence mode="popLayout">
-                {paginatedDevices.map((device) => {
-                  const pPerTb = (device.price / device.capacity_gb) * 1000;
-                  return (
+                {paginatedDevices.map((device) => (
                     <motion.tr
                       key={device.id}
                       layout
@@ -251,11 +241,6 @@ export function DiskTable() {
                         {device.capacity_gb >= 1000 ? `${device.capacity_gb / 1000}TB` : `${device.capacity_gb}GB`}
                       </td>
                       <td className="p-4 text-sm font-black text-text-primary">${device.price.toFixed(2)}</td>
-                      <td className="p-4">
-                        <span className="text-xs font-bold px-2 py-1 rounded bg-accent/10 text-accent">
-                          ${pPerTb.toFixed(2)}
-                        </span>
-                      </td>
                       <td className="p-4 text-xs font-medium text-text-secondary">{device.technology}</td>
                       <td className="p-4 text-center">
                         <a
@@ -269,8 +254,7 @@ export function DiskTable() {
                         </a>
                       </td>
                     </motion.tr>
-                  );
-                })}
+                ))}
               </AnimatePresence>
             </tbody>
           </table>
