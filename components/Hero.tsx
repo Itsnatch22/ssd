@@ -88,7 +88,8 @@ export function Hero() {
               <Image
                 src="https://images.unsplash.com/photo-1597733336794-12d05021d510?auto=format&fit=crop&q=80&w=800&h=800"
                 alt="High-performance storage devices"
-                fill
+                width={800}
+                height={800}
                 className="object-cover"
                 priority
               />

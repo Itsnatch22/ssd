@@ -38,8 +38,9 @@ export function DealCard({ device, index }: { device: Product; index: number }) 
         <Image
           src={imageUrl}
           alt={device.image_alt || device.name}
-          fill
-          className="object-cover group-hover:scale-110 transition-transform duration-500"
+          width={640}
+          height={360}
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
         <div className="absolute top-3 left-3 flex gap-2">
           <span className="bg-accent text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
