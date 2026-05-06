@@ -37,7 +37,7 @@ const PRODUCT_COLUMNS = [
 const FALLBACK_PRODUCT_IMAGE =
   'https://images.unsplash.com/photo-1597733336794-12d05021d510?auto=format&fit=crop&q=80&w=400&h=400';
 
-export async function getProducts(options?: { featuredOnly?: boolean }): Promise<Product[]> {
+export async function getProducts(options?: { featuredOnly?: boolean; search?: string; limit?: number }): Promise<Product[]> {
   let query = supabase
     .from('ssd_products')
     .select(PRODUCT_COLUMNS)
@@ -45,6 +45,14 @@ export async function getProducts(options?: { featuredOnly?: boolean }): Promise
 
   if (options?.featuredOnly) {
     query = query.eq('featured', true);
+  }
+
+  if (options?.search) {
+    query = query.or(`name.ilike.%${options.search}%,brand.ilike.%${options.search}%,technology.ilike.%${options.search}%`);
+  }
+
+  if (options?.limit) {
+    query = query.limit(options.limit);
   }
 
   const { data, error } = await query.returns<SsdProductRow[]>();
