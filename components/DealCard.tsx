@@ -8,7 +8,6 @@ import { ExternalLink } from 'lucide-react';
 export function DealCard({ device, index }: { device: Product; index: number }) {
   const imageUrl = device.image_url;
   
-  const pricePerTb = (device.price / device.capacity_gb) * 1000;
 
   const trackBuyClick = async () => {
     try {
@@ -65,9 +64,6 @@ export function DealCard({ device, index }: { device: Product; index: number }) 
           <div>
             <div className="text-2xl font-heading font-black text-text-primary">
               ${device.price.toFixed(2)}
-            </div>
-            <div className="text-[10px] text-text-secondary font-bold uppercase tracking-tighter">
-              ${pricePerTb.toFixed(2)} / TB
             </div>
           </div>
           <a

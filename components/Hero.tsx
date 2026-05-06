@@ -37,7 +37,7 @@ export function Hero() {
       </div>
 
       <div className="container mx-auto px-4">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
+        <div className="flex flex-col lg:flex-row items-center gap-6">
           <div className="flex-1 text-center lg:text-left">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
