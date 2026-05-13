@@ -33,21 +33,21 @@ export function DealCard({ device, index }: { device: Product; index: number }) 
       transition={{ delay: index * 0.1 }}
       className="group relative flex flex-col bg-surface rounded-2xl border border-border overflow-hidden hover:shadow-xl transition-all"
     >
-      <div className="relative aspect-video overflow-hidden">
-        <Image
-          src={imageUrl}
-          alt={device.image_alt || device.name}
-          width={640}
-          height={360}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-        />
-        <div className="absolute top-3 left-3 flex gap-2">
-          <span className="bg-accent text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
-            Featured
-          </span>
-          <span className="bg-background/80 backdrop-blur text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
-            {device.form_factor}
-          </span>
+      <div className="relative overflow-hidden">
+        <div className="relative h-45 md:h-50 w-full">
+          <Image
+            src={imageUrl}
+            alt={device.image_alt || device.name}
+            fill
+            priority={index === 0}
+            sizes="(max-width: 768px) 320px, 320px"
+            className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+          />
+          <div className="absolute inset-0">
+            <span className="absolute top-3 left-3 bg-accent text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
+              Featured {device.form_factor}
+            </span>
+          </div>
         </div>
       </div>
 

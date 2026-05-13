@@ -97,10 +97,15 @@ export function FeaturedDeals() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {devices.slice(0, 6).map((device, i) => (
-            <DealCard key={device.id} device={device} index={i} />
-          ))}
+        {/* Single row (horizontal scroll on small screens) */}
+        <div className="overflow-x-auto -mx-4 px-4">
+          <div className="flex gap-6">
+            {devices.slice(0, 6).map((device, i) => (
+              <div key={device.id} className="w-[320px] shrink-0">
+                <DealCard device={device} index={i} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
