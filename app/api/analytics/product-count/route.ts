@@ -36,8 +36,8 @@ export async function GET(request: NextRequest) {
       lastUpdated: new Date().toISOString(),
     }, {
       headers: {
-        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=300', // 1 hour revalidation
-      },
+  'Cache-Control': 'public, s-maxage=120, stale-while-revalidate=300', 
+},
     });
   } catch (error) {
     console.error('Error in product-count endpoint:', error);
