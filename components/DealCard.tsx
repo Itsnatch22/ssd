@@ -41,7 +41,7 @@ export function DealCard({ device, index }: { device: Product; index: number }) 
             fill
             priority={index === 0}
             sizes="(max-width: 768px) 320px, 320px"
-            className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+            className="object-contain w-full h-full group-hover:scale-105 transition-transform duration-500"
           />
           <div className="absolute inset-0">
             <span className="absolute top-3 left-3 bg-accent text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
