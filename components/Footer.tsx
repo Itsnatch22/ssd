@@ -20,12 +20,12 @@ export function Footer() {
               Your ultimate destination for comparing storage device prices. We help you find the best value for your digital storage needs.
             </p>
             <div className="flex items-center gap-4">
-              <a href="#" className="text-text-secondary hover:text-accent transition-colors" aria-label="Twitter">
+              <Link href="#" className="text-text-secondary hover:text-accent transition-colors" aria-label="Twitter">
                 <FaTwitter size={20} />
-              </a>
-              <a href="#" className="text-text-secondary hover:text-accent transition-colors" aria-label="GitHub">
+              </Link>
+              <Link href="https://www.facebook.com/people/Ssd-Expert-Zone/61592293473296/" className="text-text-secondary hover:text-accent transition-colors" aria-label="GitHub">
                 <FaFacebook size={20} />
-              </a>
+              </Link>
             </div>
           </div>
 
