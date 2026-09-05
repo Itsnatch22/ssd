@@ -1,45 +1,85 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --surface: #f8f9fa;
-  --accent: #E85D26;
-  --accent-hover: #FF6B35;
-  --text-primary: #09090b;
-  --text-secondary: #6b7280;
+  --background: #f7f6f3;
+  --surface: #ffffff;
+  --surface-elevated: #f0efe9;
+  --accent: #f97316;
+  --accent-hover: #ea580c;
+  --accent-soft: rgba(249, 115, 22, 0.1);
+  --success: #14804a;
+  --warning: #d97706;
+  --text-primary: #111827;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
   --border: #e5e7eb;
+  --shadow-soft: 0 20px 45px rgba(17, 24, 39, 0.08);
   --font-inter: var(--font-inter);
   --font-bricolage: var(--font-bricolage);
 }
 
 .dark {
-  --background: #0F0F0F;
-  --surface: #141414;
-  --accent: #E85D26;
-  --accent-hover: #FF6B35;
-  --text-primary: #F5F5F5;
-  --text-secondary: #A0A0A0;
-  --border: #1F1F1F;
+  --background: #0b0b0d;
+  --surface: #121417;
+  --surface-elevated: #1a1d22;
+  --accent: #f97316;
+  --accent-hover: #fb923c;
+  --accent-soft: rgba(249, 115, 22, 0.12);
+  --success: #34d399;
+  --warning: #fbbf24;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #e2e8f0;
+  --border: #2a2d33;
+  --shadow-soft: 0 24px 55px rgba(2, 6, 23, 0.38);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
   --color-border: var(--border);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
+  background:
+    radial-gradient(circle at top, rgba(249, 115, 22, 0.12), transparent 20%),
+    var(--background);
   color: var(--text-primary);
   font-family: var(--font-inter);
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-bricolage);
+}
+
+::selection {
+  background: rgba(249, 115, 22, 0.18);
+}
+
+img {
+  max-width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

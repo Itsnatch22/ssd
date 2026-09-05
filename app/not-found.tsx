@@ -1,34 +1,24 @@
-"use client";
 import Link from 'next/link';
-import { AlertTriangle } from 'lucide-react';
+import { ArrowLeft, SearchX } from 'lucide-react';
 
 export default function NotFound() {
   return (
     <main className="min-h-screen flex flex-col">
-      <div className="flex-1 pt-32 pb-24 flex items-center justify-center">
-        <div className="container mx-auto px-4 max-w-md text-center">
-          <div className="bg-surface p-12 rounded-3xl border border-border shadow-xl">
-            <div className="w-24 h-24 bg-amber-500/10 rounded-2xl flex items-center justify-center mx-auto mb-8 border-2 border-amber-500/20">
-              <AlertTriangle className="w-12 h-12 text-amber-500" />
+      <div className="flex-1 pb-24 pt-32">
+        <div className="mx-auto max-w-md px-4 text-center">
+          <div className="rounded-[2rem] border border-border bg-surface p-10 shadow-soft">
+            <div className="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-[1.75rem] bg-accent-soft text-accent">
+              <SearchX size={42} />
             </div>
-            <h1 className="text-4xl md:text-5xl font-heading font-bold bg-linear-to-r from-text-primary to-amber-500 bg-clip-text text-transparent mb-4">
-              Page Not Found
-            </h1>
-            <p className="text-text-secondary mb-8 leading-relaxed">
-              Sorry, the page you&apos;re looking for doesn&apos;t exist or has been moved.
-            </p>
-            <div className="space-y-3">
-              <Link 
-                href="/privacy"
-                className="w-full block h-12 items-center justify-center bg-accent hover:bg-accent-hover text-white rounded-xl font-bold transition-all shadow-lg shadow-accent/20"
-              >
-                Go to Privacy
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">404</p>
+            <h1 className="mt-4 text-4xl font-black tracking-[-0.05em] text-text-primary md:text-5xl">That drive couldn&apos;t be found.</h1>
+            <p className="mt-4 text-base leading-7 text-text-secondary">Looks like this product has left the building or the page has moved.</p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+              <Link href="/deals" className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white hover:bg-accent-hover">
+                <ArrowLeft size={16} /> Back to deals
               </Link>
-              <Link 
-                href="/"
-                className="w-full block h-12 items-center justify-center bg-surface border border-border hover:bg-accent-hover text-text-primary rounded-xl font-medium transition-all"
-              >
-                Back to Home
+              <Link href="/" className="inline-flex items-center justify-center rounded-full border border-border bg-background px-6 py-3 text-sm font-semibold text-text-primary hover:border-accent/40 hover:text-accent">
+                Home
               </Link>
             </div>
           </div>

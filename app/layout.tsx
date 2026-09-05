@@ -16,14 +16,14 @@ const bricolage = Bricolage_Grotesque({
 });
 
 export const metadata: Metadata = {
-  title: "SSDEXPERT | Best Storage Device Price Comparison",
-  description: "Find the best deals on SSDs, HDDs, and NVMe drives. Real-time price comparison and affiliate links.",
+  title: 'SSDEXPERTZONE | Best storage deals and SSD price comparison',
+  description: 'Compare SSDs, HDDs, and NVMe drives by price, capacity, performance, and value before you buy.',
   openGraph: {
-    title: "SSDEXPERT | Best Storage Device Price Comparison",
-    description: "Compare prices for SSDs, HDDs, and more. Get the best value for your storage needs.",
-    type: "website",
-    locale: "en_US",
-    siteName: "SSDEXPERT",
+    title: 'SSDEXPERTZONE | Best storage deals and SSD price comparison',
+    description: 'Compare SSDs, HDDs, and NVMe drives by price, capacity, performance, and value before you buy.',
+    type: 'website',
+    locale: 'en_US',
+    siteName: 'SSDEXPERTZONE',
   },
 };
 
