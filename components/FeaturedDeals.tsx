@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { Search, Tag } from 'lucide-react';
 import { getProducts } from '@/lib/service/products';
 import { DealCard } from './DealCard';
-import { Tag, Search } from 'lucide-react';
 
 export function FeaturedDeals() {
   const [devices, setDevices] = useState<any[]>([]);
@@ -11,102 +11,78 @@ export function FeaturedDeals() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let active = true;
+
     const fetchProducts = async () => {
+      setLoading(true);
       try {
-        const products = await getProducts({ 
-          featuredOnly: true, 
-          search: searchTerm || undefined,
-          limit: 6 
-        });
-        setDevices(products);
+        const products = await getProducts({ featuredOnly: true, search: searchTerm || undefined, limit: 6 });
+        if (active) setDevices(products);
       } catch (error) {
         console.error('Failed to fetch products:', error);
+        if (active) setDevices([]);
       } finally {
-        setLoading(false);
+        if (active) setLoading(false);
       }
     };
 
     fetchProducts();
+    return () => {
+      active = false;
+    };
   }, [searchTerm]);
 
-  if (loading) {
-    return (
-      <section className="py-24 bg-surface">
-        <div className="container mx-auto px-4">
-          <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 rounded w-64 mb-4"></div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[1, 2, 3, 4, 5, 6].map(i => (
-                <div key={i} className="h-64 bg-gray-200 rounded-2xl"></div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (!devices.length) {
-    return (
-      <section className="py-24 bg-surface">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center gap-3 mb-12">
-            <div className="bg-accent/10 text-accent p-2 rounded-xl">
-              <Tag size={24} />
-            </div>
-            <div>
-              <h2 className="text-3xl font-heading font-bold tracking-tight">
-                Featured <span className="text-accent">Deals</span>
-              </h2>
-              <p className="text-text-secondary">Hand-picked storage values for you.</p>
-            </div>
-          </div>
-          <div className="text-center py-12">
-            <p className="text-text-secondary">No featured deals found matching your search.</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const heading = useMemo(() => {
+    if (!devices.length && !searchTerm) return 'Featured deals';
+    if (!devices.length) return 'No matching deals';
+    return 'Featured deals';
+  }, [devices, searchTerm]);
 
   return (
-    <section className="py-24 bg-surface">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center gap-3 mb-12">
-          <div className="bg-accent/10 text-accent p-2 rounded-xl">
-            <Tag size={24} />
+    <section className="py-20 md:py-24" id="deals">
+      <div className="mx-auto max-w-7xl px-4 md:px-6">
+        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-accent-soft text-accent">
+              <Tag size={22} />
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Curated picks</p>
+              <h2 className="mt-1 text-3xl font-black tracking-[-0.04em] text-text-primary md:text-4xl">{heading}</h2>
+            </div>
           </div>
-          <div className="flex-1">
-            <h2 className="text-3xl font-heading font-bold tracking-tight">
-              Featured <span className="text-accent">Deals</span>
-            </h2>
-            <p className="text-text-secondary">Hand-picked storage values for you.</p>
-          </div>
-        </div>
 
-        <div className="mb-8">
-          <div className="relative max-w-md mx-auto">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary" size={20} />
+          <div className="relative w-full max-w-md">
+            <Search className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary" size={18} />
             <input
+              aria-label="Search featured deals"
               type="text"
-              placeholder="Search by brand, name, or technology..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-border rounded-xl bg-background text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+              onChange={(event) => setSearchTerm(event.target.value)}
+              placeholder="Search by brand, model, or technology"
+              className="w-full rounded-full border border-border bg-surface px-12 py-3 text-sm text-text-primary placeholder:text-text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15"
             />
           </div>
         </div>
 
-        {/* Single row (horizontal scroll on small screens) */}
-        <div className="overflow-x-auto -mx-4 px-4">
-          <div className="flex gap-6">
-            {devices.slice(0, 6).map((device, i) => (
-              <div key={device.id} className="w-[320px] shrink-0">
-                <DealCard device={device} index={i} />
-              </div>
+        {loading ? (
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {[1, 2, 3, 4, 5, 6].map((item) => (
+              <div key={item} className="h-[22rem] animate-pulse rounded-[1.75rem] border border-border bg-surface" />
             ))}
           </div>
-        </div>
+        ) : devices.length ? (
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {devices.map((device, index) => (
+              <DealCard key={device.id} device={device} index={index} />
+            ))}
+          </div>
+        ) : (
+          <div className="rounded-[2rem] border border-dashed border-border bg-surface px-8 py-16 text-center">
+            <p className="text-lg font-medium text-text-primary">No drives match that search.</p>
+            <p className="mt-2 text-text-secondary">Try a different brand, capacity, or technology.</p>
+          </div>
+        )}
       </div>
     </section>
   );
