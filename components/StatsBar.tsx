@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { motion, useInView, useSpring, useTransform } from 'framer-motion';
+import type { Product } from '@/types/product';
 
 function Counter({ value, label, suffix = '' }: { value: number; label: string; suffix?: string }) {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -25,9 +26,9 @@ function Counter({ value, label, suffix = '' }: { value: number; label: string; 
   );
 }
 
-export function StatsBar() {
-  const [productCount, setProductCount] = useState(0);
-  const [brandCount, setBrandCount] = useState(0);
+export function StatsBar({ products }: { products: Product[] }) {
+  const [productCount, setProductCount] = useState(products.length);
+  const [brandCount, setBrandCount] = useState(new Set(products.map((product) => product.brand).filter(Boolean)).size);
 
   useEffect(() => {
     const fetchStats = async () => {

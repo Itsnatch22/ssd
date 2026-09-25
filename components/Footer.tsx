@@ -37,6 +37,7 @@ export function Footer() {
               <li><Link href="/about" className="transition-colors hover:text-accent">About</Link></li>
               <li><Link href="/contact" className="transition-colors hover:text-accent">Contact</Link></li>
               <li><Link href="/privacy" className="transition-colors hover:text-accent">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="transition-colors hover:text-accent">Terms of Use</Link></li>
               <li><Link href="/guides" className="transition-colors hover:text-accent">Guides</Link></li>
             </ul>
           </div>
@@ -46,6 +47,9 @@ export function Footer() {
             <p className="text-sm leading-7 text-text-secondary">
               As an Amazon Associate, we earn from qualifying purchases. This means we may receive a small commission if you buy through our links, at no extra cost to you.
             </p>
+            <Link href="/affiliate-disclosure" className="mt-3 inline-flex text-sm font-semibold text-accent transition-colors hover:text-accent-hover">
+              Read the full disclosure
+            </Link>
           </div>
         </div>
 

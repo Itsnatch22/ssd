@@ -3,12 +3,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Search, Tag } from 'lucide-react';
 import { getProducts } from '@/lib/service/products';
+import type { Product } from '@/types/product';
 import { DealCard } from './DealCard';
 
-export function FeaturedDeals() {
-  const [devices, setDevices] = useState<any[]>([]);
+export function FeaturedDeals({ initialDevices }: { initialDevices: Product[] }) {
+  const [devices, setDevices] = useState<Product[]>(initialDevices);
   const [searchTerm, setSearchTerm] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -68,7 +69,7 @@ export function FeaturedDeals() {
         {loading ? (
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {[1, 2, 3, 4, 5, 6].map((item) => (
-              <div key={item} className="h-[22rem] animate-pulse rounded-[1.75rem] border border-border bg-surface" />
+              <div key={item} className="h-88 animate-pulse rounded-[1.75rem] border border-border bg-surface" />
             ))}
           </div>
         ) : devices.length ? (
@@ -78,7 +79,7 @@ export function FeaturedDeals() {
             ))}
           </div>
         ) : (
-          <div className="rounded-[2rem] border border-dashed border-border bg-surface px-8 py-16 text-center">
+          <div className="rounded-4xl border border-dashed border-border bg-surface px-8 py-16 text-center">
             <p className="text-lg font-medium text-text-primary">No drives match that search.</p>
             <p className="mt-2 text-text-secondary">Try a different brand, capacity, or technology.</p>
           </div>

@@ -55,7 +55,7 @@ export default async function HomePage() {
   return (
     <main className="min-h-screen overflow-x-hidden">
       <Hero />
-      <StatsBar />
+      <StatsBar products={products} />
 
       <section className="mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-10">
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -92,7 +92,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <FeaturedDeals />
+      <FeaturedDeals initialDevices={products.filter((product) => product.featured).slice(0, 6)} />
 
       <section className="mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-10">
         <div className="mb-8 flex items-end justify-between gap-4">

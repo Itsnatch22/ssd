@@ -1,11 +1,31 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowRight, CheckCircle2, Cpu, HardDrive, ShieldCheck } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { getProducts } from '@/lib/service/products';
+import type { Metadata } from 'next';
 
 function formatPrice(value: number) {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value || 0);
+}
+
+async function findProduct(slug: string) {
+  const products = await getProducts({ limit: 100 });
+  return products.find((entry) => entry.slug === slug);
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const product = await findProduct(slug);
+
+  if (!product) {
+    return { title: 'Product not found | SSDEXPERTZONE' };
+  }
+
+  return {
+    title: `${product.name} | SSDEXPERTZONE`,
+    description: `Compare the ${product.name} by capacity, technology, interface, condition, warranty, and current listed price.`,
+  };
 }
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -93,6 +113,27 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </div>
           </div>
         </div>
+
+        <section className="mt-12 grid gap-5 md:grid-cols-2">
+          <div className="rounded-[2rem] border border-border bg-surface p-6 shadow-sm md:p-8">
+            <h2 className="text-2xl font-black tracking-[-0.04em] text-text-primary">What these specifications mean</h2>
+            <p className="mt-4 leading-7 text-text-secondary">
+              This {product.form_factor} {product.technology} drive offers {product.capacity_gb >= 1000 ? `${product.capacity_gb / 1000}TB` : `${product.capacity_gb}GB`} of storage. The technology and interface determine whether it fits your computer and what kind of connection it expects, so check your device manual or motherboard specifications before ordering.
+            </p>
+            <p className="mt-4 leading-7 text-text-secondary">
+              The listed price is useful for comparison at the time of cataloging, but it can change. Compare the price with drives of the same capacity and interface rather than comparing unlike products.
+            </p>
+          </div>
+
+          <div className="rounded-[2rem] border border-border bg-surface p-6 shadow-sm md:p-8">
+            <h2 className="text-2xl font-black tracking-[-0.04em] text-text-primary">Before you buy</h2>
+            <ul className="mt-4 space-y-3 leading-7 text-text-secondary">
+              <li>Confirm that your system supports the listed {product.technology} technology and {product.form_factor} form factor.</li>
+              <li>Check whether your workload needs this capacity, especially if you plan to store games, media, or large project files.</li>
+              <li>Review the retailer listing for current price, stock, shipping, warranty terms, and returns.</li>
+            </ul>
+          </div>
+        </section>
 
         {related.length > 0 && (
           <section className="mt-12">

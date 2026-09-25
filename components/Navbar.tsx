@@ -21,6 +21,7 @@ const navLinks = [
   { name: 'Brands', href: '/brands' },
   { name: 'Guides', href: '/guides' },
   { name: 'About', href: '/about' },
+  { name: 'Methodology', href: '/methodology' },
 ];
 
 export function Navbar() {
