@@ -1,6 +1,12 @@
 import Link from 'next/link';
-import { ArrowRight, ArrowUpDown } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { getProducts } from '@/lib/service/products';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Compare Storage Drives | SSDEXPERTZONE',
+  description: 'Compare storage drives by price, capacity, technology, interface, and condition.',
+};
 
 export default async function ComparePage() {
   const products = await getProducts({ limit: 4 });

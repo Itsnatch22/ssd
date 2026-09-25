@@ -20,6 +20,7 @@ export function DealsBrowser({ initialProducts }: { initialProducts: Product[] }
   const [query, setQuery] = useState(searchParams.get('q') ?? '');
   const [brand, setBrand] = useState(searchParams.get('brand') ?? 'all');
   const [type, setType] = useState(searchParams.get('type') ?? 'all');
+  const [capacity, setCapacity] = useState(searchParams.get('capacity') ?? 'all');
   const [sort, setSort] = useState('recommended');
   const [loading, setLoading] = useState(false);
 
@@ -61,6 +62,7 @@ export function DealsBrowser({ initialProducts }: { initialProducts: Product[] }
         String(product.capacity_gb).includes(normalizedQuery);
 
       const matchesBrand = brand === 'all' || product.brand === brand;
+      const matchesCapacity = capacity === 'all' || String(product.capacity_gb) === capacity;
       const matchesType =
         type === 'all' ||
         (type === 'nvme' && /nvme|pcie/i.test(product.technology)) ||
@@ -68,7 +70,7 @@ export function DealsBrowser({ initialProducts }: { initialProducts: Product[] }
         (type === 'hdd' && /hdd|sas/i.test(product.technology)) ||
         (type === 'external' && /usb|external/i.test(product.technology));
 
-      return matchesQuery && matchesBrand && matchesType;
+      return matchesQuery && matchesBrand && matchesCapacity && matchesType;
     });
 
     switch (sort) {
@@ -83,7 +85,7 @@ export function DealsBrowser({ initialProducts }: { initialProducts: Product[] }
       default:
         return [...nextProducts].sort((a, b) => Number(b.featured) - Number(a.featured) || a.price - b.price);
     }
-  }, [brand, products, query, sort, type]);
+  }, [brand, capacity, products, query, sort, type]);
 
   return (
     <>
@@ -94,7 +96,7 @@ export function DealsBrowser({ initialProducts }: { initialProducts: Product[] }
       </div>
 
       <div className="mb-8 rounded-[1.5rem] border border-border bg-surface p-4 shadow-sm">
-        <div className="grid gap-4 lg:grid-cols-[1.2fr_0.7fr_0.7fr_0.7fr]">
+        <div className="grid gap-4 lg:grid-cols-[1.2fr_0.7fr_0.7fr_0.7fr_0.7fr]">
           <label className="relative block">
             <Search className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary" size={18} />
             <input
@@ -123,6 +125,19 @@ export function DealsBrowser({ initialProducts }: { initialProducts: Product[] }
               <option value="ssd">SSD</option>
               <option value="hdd">HDD</option>
               <option value="external">External</option>
+            </select>
+          </label>
+
+          <label className="flex items-center gap-2 rounded-full border border-border bg-background px-3 py-2 text-sm text-text-primary">
+            <span className="text-text-secondary">Capacity</span>
+            <select value={capacity} onChange={(event) => setCapacity(event.target.value)} className="w-full bg-transparent text-sm outline-none">
+              <option value="all">All</option>
+              <option value="250">250GB</option>
+              <option value="500">500GB</option>
+              <option value="1000">1TB</option>
+              <option value="2000">2TB</option>
+              <option value="4000">4TB</option>
+              <option value="8000">8TB</option>
             </select>
           </label>
 
