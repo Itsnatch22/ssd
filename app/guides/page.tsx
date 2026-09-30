@@ -1,5 +1,11 @@
 import Link from 'next/link';
 import { ArrowRight, HardDrive } from 'lucide-react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Storage Buying Guides | SSDEXPERTZONE',
+  description: 'Practical guides for choosing SSDs, HDDs, NVMe drives, and the right storage capacity.',
+};
 
 const guides = [
   {

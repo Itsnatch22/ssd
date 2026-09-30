@@ -1,6 +1,12 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { getProducts } from '@/lib/service/products';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Storage Brands | SSDEXPERTZONE',
+  description: 'Browse storage products by manufacturer and compare available SSD, HDD, and NVMe drives.',
+};
 
 export default async function BrandsPage() {
   const products = await getProducts({ limit: 100 });
