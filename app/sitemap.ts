@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { getProducts } from '@/lib/service/products';
 
 const siteUrl = 'https://www.ssdexpertzone.com';
 
@@ -26,19 +27,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route === '/' ? 1 : 0.8,
   }));
 
-  try {
-    const { getProducts } = await import('@/lib/service/products');
-    const products = await getProducts();
+  const products = await getProducts();
 
-    return [
-      ...staticEntries,
-      ...products.map((product) => ({
-        url: `${siteUrl}/products/${product.slug}`,
-        changeFrequency: 'weekly' as const,
-        priority: 0.7,
-      })),
-    ];
-  } catch {
-    return staticEntries;
-  }
+  return [
+    ...staticEntries,
+    ...products.map((product) => ({
+      url: `${siteUrl}/products/${product.slug}`,
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    })),
+  ];
 }

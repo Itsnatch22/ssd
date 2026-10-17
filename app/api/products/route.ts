@@ -6,7 +6,7 @@ export async function GET() {
 
     return Response.json({ products, total: products.length });
   } catch (error) {
-    console.error('Failed to fetch products from Supabase:', error);
+    console.error('Failed to fetch products from Sanity:', error);
 
     return Response.json(
       { error: 'Failed to fetch products.' },

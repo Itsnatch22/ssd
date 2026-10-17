@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SanityLive } from "@/sanity/lib/live";
 import Script from "next/script";
 
 const inter = Inter({
@@ -53,6 +54,7 @@ export default function RootLayout({
           {children}
           <Footer/>
         </ThemeProvider>
+        <SanityLive />
       </body>
     </html>
   );

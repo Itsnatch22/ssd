@@ -2,26 +2,39 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { Search, Tag } from 'lucide-react';
-import { getProducts } from '@/lib/service/products';
-import type { Product } from '@/types/product';
+import type { Product, ProductsResponse } from '@/types/product';
 import { DealCard } from './DealCard';
 
 export function FeaturedDeals({ initialDevices }: { initialDevices: Product[] }) {
   const [devices, setDevices] = useState<Product[]>(initialDevices);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
 
     const fetchProducts = async () => {
       setLoading(true);
+      setError(null);
+
       try {
-        const products = await getProducts({ featuredOnly: true, search: searchTerm || undefined, limit: 6 });
+        const params = new URLSearchParams({ limit: '6' });
+        if (searchTerm.trim()) params.set('search', searchTerm.trim());
+
+        const response = await fetch(`/api/featured?${params.toString()}`);
+        if (!response.ok) {
+          throw new Error(`Featured products request failed with status ${response.status}`);
+        }
+
+        const { products } = (await response.json()) as ProductsResponse;
         if (active) setDevices(products);
       } catch (error) {
         console.error('Failed to fetch products:', error);
-        if (active) setDevices([]);
+        if (active) {
+          setDevices([]);
+          setError('Featured deals are temporarily unavailable. Please try again later.');
+        }
       } finally {
         if (active) setLoading(false);
       }
@@ -72,6 +85,10 @@ export function FeaturedDeals({ initialDevices }: { initialDevices: Product[] })
               <div key={item} className="h-88 animate-pulse rounded-[1.75rem] border border-border bg-surface" />
             ))}
           </div>
+        ) : error ? (
+          <p className="rounded-4xl border border-dashed border-border bg-surface px-8 py-16 text-center text-text-secondary">
+            {error}
+          </p>
         ) : devices.length ? (
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {devices.map((device, index) => (
