@@ -21,6 +21,7 @@ export type Article = ArticleSummary & {
   imageAlt?: string | null;
   imageWidth?: number | null;
   imageHeight?: number | null;
+  relatedArticles?: ArticleSummary[] | null;
 };
 
 const ARTICLES_QUERY = defineQuery(`
@@ -43,6 +44,12 @@ const ARTICLE_QUERY = defineQuery(`
     excerpt,
     authorName,
     publishedAt,
+    "relatedArticles": relatedArticles[]->{
+      _id,
+      title,
+      "slug": slug.current,
+      excerpt
+    },
     "imageUrl": mainImage.asset->url,
     "imageAlt": mainImage.alt,
     "imageWidth": mainImage.asset->metadata.dimensions.width,

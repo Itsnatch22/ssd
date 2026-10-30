@@ -112,6 +112,10 @@ export default async function ArticlePage({
     notFound();
   }
 
+  const relatedArticles = article.relatedArticles?.filter(
+    (relatedArticle) => relatedArticle.slug !== article.slug,
+  ) ?? [];
+
   return (
     <main className="min-h-screen pb-20">
       <div className="mx-auto max-w-4xl px-4 pt-10 md:px-6 md:pt-12">
@@ -147,6 +151,28 @@ export default async function ArticlePage({
             {article.body && <PortableText value={article.body} components={portableTextComponents} />}
           </div>
         </article>
+        {relatedArticles.length > 0 && (
+          <section className="mt-10" aria-labelledby="related-articles-heading">
+            <h2 id="related-articles-heading" className="text-2xl font-black tracking-[-0.04em] text-text-primary">
+              Related articles
+            </h2>
+            <div className="mt-5 grid gap-5 sm:grid-cols-2">
+              {relatedArticles.map((relatedArticle) => (
+                  <Link
+                    key={relatedArticle._id}
+                    href={`/guides/${relatedArticle.slug}`}
+                    className="rounded-[1.75rem] border border-border bg-surface p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-soft"
+                  >
+                    <h3 className="text-xl font-bold text-text-primary">{relatedArticle.title}</h3>
+                    {relatedArticle.excerpt && (
+                      <p className="mt-3 text-sm leading-6 text-text-secondary">{relatedArticle.excerpt}</p>
+                    )}
+                    <span className="mt-5 inline-flex text-sm font-semibold text-accent">Read article</span>
+                  </Link>
+                ))}
+            </div>
+          </section>
+        )}
       </div>
     </main>
   );

@@ -48,6 +48,18 @@ export const article = defineType({
       ],
     }),
     defineField({
+      name: 'relatedArticles',
+      title: 'Related articles',
+      description: 'Choose other published articles to recommend at the end of this article.',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'reference',
+          to: [{ type: 'article' }],
+        }),
+      ],
+    }),
+    defineField({
       name: 'body',
       type: 'array',
       of: [
