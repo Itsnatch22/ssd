@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, HardDrive } from 'lucide-react';
 import type { Metadata } from 'next';
+import { getArticles } from '@/lib/service/articles';
 
 export const metadata: Metadata = {
   title: 'Storage Buying Guides | SSDEXPERTZONE',
@@ -25,7 +26,9 @@ const guides = [
   },
 ];
 
-export default function GuidesPage() {
+export default async function GuidesPage() {
+  const articles = await getArticles();
+
   return (
     <main className="min-h-screen pb-20">
       <div className="mx-auto max-w-7xl px-4 pt-10 md:px-6 md:pt-12">
@@ -45,6 +48,18 @@ export default function GuidesPage() {
               <p className="mt-3 text-sm leading-6 text-text-secondary">{guide.summary}</p>
               <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-accent">
                 Read guide <ArrowRight size={16} />
+              </span>
+            </Link>
+          ))}
+          {articles.map((article) => (
+            <Link key={article._id} href={`/guides/${article.slug}`} className="rounded-[1.75rem] border border-border bg-surface p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-soft">
+              <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-accent-soft text-accent">
+                <HardDrive size={18} />
+              </div>
+              <h2 className="text-2xl font-black tracking-[-0.04em] text-text-primary">{article.title}</h2>
+              {article.excerpt && <p className="mt-3 text-sm leading-6 text-text-secondary">{article.excerpt}</p>}
+              <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-accent">
+                Read article <ArrowRight size={16} />
               </span>
             </Link>
           ))}
